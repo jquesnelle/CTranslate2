@@ -18,6 +18,7 @@ option(CUDA_DYNAMIC_LOADING "Dynamically load CUDA libraries at runtime" OFF)
 option(ENABLE_CPU_DISPATCH "Compile CPU kernels for multiple ISA and dispatch at runtime" ON)
 option(ENABLE_PROFILING "Compile with profiling support" OFF)
 option(BUILD_CLI "Compile the clients" ON)
+option(BUILD_LLAMA "Compile the LLaMA example" OFF)
 option(BUILD_TESTS "Compile the tests" OFF)
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 
@@ -545,6 +546,12 @@ include(GNUInstallDirs)
 
 if (BUILD_CLI)
   add_subdirectory(cli)
+endif()
+
+if (BUILD_LLAMA)
+  option(SPM_ENABLE_TCMALLOC OFF)
+  add_subdirectory(third_party/sentencepiece)
+  add_subdirectory(examples/llama)
 endif()
 
 install(
